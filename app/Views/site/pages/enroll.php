@@ -70,11 +70,11 @@ $es = ($idioma ?? '') === 'es';
 <script>
   (function () {
     const saveTokenUrl = <?= json_encode($saveTokenUrl) ?>;
-    const reportUrl    = <?= json_encode($reportUrl) ?>;
+    const finishUrl    = <?= json_encode($finishUrl) ?>;
     const statusEl     = document.getElementById('enroll-status');
     const texts = {
       saving:   <?= json_encode($es ? 'Verificacion exitosa. Guardando tu sesion...' : 'Verification successful. Saving your session...') ?>,
-      redirect: <?= json_encode($es ? 'Listo. Redirigiendo a tu reporte...' : 'Done. Redirecting to your report...') ?>,
+      redirect: <?= json_encode($es ? 'Listo. Vamos a crear tu contrasena...' : 'Done. Let\'s create your password...') ?>,
       error:    <?= json_encode($es ? 'Ocurrio un error al guardar tu sesion. Intenta de nuevo.' : 'An error occurred saving your session. Please try again.') ?>
     };
 
@@ -87,6 +87,7 @@ $es = ($idioma ?? '') === 'es';
       }
 
       const userToken = metadata['user-token'];
+      console.log('Evento success -> userId:', userId, '| userToken presente:', !!userToken);
       statusEl.textContent = texts.saving;
 
       fetch(saveTokenUrl, {
@@ -94,19 +95,27 @@ $es = ($idioma ?? '') === 'es';
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_token: userToken, user_id: userId })
       })
-        .then(function (response) { return response.json(); })
-        .then(function (data) {
-          console.log('Token guardado:', data);
-          if (data && data.success) {
+        .then(function (response) {
+          return response.text().then(function (raw) {
+            let parsed = null;
+            try { parsed = JSON.parse(raw); } catch (e) { /* no era JSON */ }
+            return { ok: response.ok, status: response.status, raw: raw, data: parsed };
+          });
+        })
+        .then(function (result) {
+          console.log('Respuesta de save-token:', result);
+          if (result.data && result.data.success) {
             statusEl.textContent = texts.redirect;
-            window.location.href = (data.redirect || reportUrl);
+            window.location.href = (result.data.redirect || finishUrl);
+          } else if (result.data && result.data.message) {
+            statusEl.textContent = texts.error + ' (' + result.data.message + ')';
           } else {
-            statusEl.textContent = texts.error;
+            statusEl.textContent = texts.error + ' [HTTP ' + result.status + ']';
           }
         })
         .catch(function (err) {
-          console.error('Error guardando token:', err);
-          statusEl.textContent = texts.error;
+          console.error('Error de red guardando token:', err);
+          statusEl.textContent = texts.error + ' (' + (err && err.message ? err.message : 'network') + ')';
         });
     });
   })();

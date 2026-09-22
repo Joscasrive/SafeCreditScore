@@ -1,0 +1,303 @@
+/* ==========================================================================
+   Safe Credit Score - Portal de miembros
+   Paleta y tipografia alineadas a public/css/style.css (marca del sitio).
+   ========================================================================== */
+
+:root {
+  --portal-primary: #0073c3;
+  --portal-primary-dark: #005a99;
+  --portal-bg: #f4f6fb;
+  --portal-sidebar-bg: #0b0f19;
+  --portal-sidebar-text: rgba(255, 255, 255, 0.72);
+  --portal-sidebar-text-active: #ffffff;
+  --portal-card-bg: #ffffff;
+  --portal-border: #e7eaf3;
+  --portal-text: #0a102f;
+  --portal-text-muted: #667085;
+  --portal-radius: 16px;
+  --portal-font: 'Inter', sans-serif;
+  --portal-font-heading: 'Plus Jakarta Sans', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body.portal-body {
+  margin: 0;
+  font-family: var(--portal-font);
+  background: var(--portal-bg);
+  color: var(--portal-text);
+}
+
+.portal-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.portal-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--portal-sidebar-bg);
+  color: var(--portal-sidebar-text);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 18px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  transition: transform 0.25s ease;
+  z-index: 1000;
+}
+
+.portal-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 24px;
+}
+
+.portal-sidebar__brand img {
+  height: 32px;
+  width: auto;
+}
+
+.portal-sidebar__user {
+  padding: 14px 12px;
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.portal-sidebar__user-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.portal-sidebar__user-email {
+  font-size: 0.78rem;
+  color: var(--portal-sidebar-text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.portal-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.portal-nav li + li { margin-top: 4px; }
+
+.portal-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  color: var(--portal-sidebar-text);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.portal-nav a i { width: 18px; text-align: center; }
+
+.portal-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.portal-nav a.is-active {
+  background: var(--portal-primary);
+  color: #fff;
+}
+
+.portal-nav .portal-nav__soon {
+  margin-left: auto;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.portal-sidebar__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.portal-sidebar__footer a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--portal-sidebar-text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 9px 12px;
+  border-radius: 10px;
+}
+
+.portal-sidebar__footer a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* ---------- Contenido ---------- */
+.portal-main {
+  margin-left: 260px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.portal-topbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--portal-border);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.portal-topbar__toggle {
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  color: var(--portal-text);
+  cursor: pointer;
+}
+
+.portal-content {
+  padding: 32px;
+  flex: 1;
+}
+
+.portal-page-header {
+  margin-bottom: 24px;
+}
+
+.portal-page-header h1 {
+  font-family: var(--portal-font-heading);
+  font-weight: 800;
+  font-size: 1.6rem;
+  margin: 0 0 6px;
+  color: var(--portal-text);
+}
+
+.portal-page-header p {
+  color: var(--portal-text-muted);
+  margin: 0;
+}
+
+.portal-card {
+  background: var(--portal-card-bg);
+  border: 1px solid var(--portal-border);
+  border-radius: var(--portal-radius);
+  padding: 24px;
+}
+
+.portal-alert {
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+
+.portal-alert--error {
+  background: #fdecea;
+  color: #9c1c1c;
+  border: 1px solid #f6c4c0;
+}
+
+.portal-alert--info {
+  background: #e8f2fb;
+  color: #0a4c78;
+  border: 1px solid #bfe0f5;
+}
+
+/* ---------- Placeholder "proximamente" ---------- */
+.portal-coming-soon {
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.portal-coming-soon i {
+  font-size: 2.4rem;
+  color: var(--portal-primary);
+  margin-bottom: 18px;
+}
+
+.portal-coming-soon h2 {
+  font-family: var(--portal-font-heading);
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.portal-coming-soon p {
+  color: var(--portal-text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.portal-badge-soon {
+  display: inline-block;
+  margin-top: 18px;
+  background: rgba(0, 115, 195, 0.1);
+  color: var(--portal-primary-dark);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ---------- Componente Array embebido ---------- */
+.portal-array-embed { min-height: 480px; }
+array-credit-report,
+array-credit-overview,
+array-credit-score,
+array-credit-debt-analysis,
+array-credit-score-simulator {
+  display: block;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+  .portal-sidebar {
+    transform: translateX(-100%);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .portal-sidebar.is-open { transform: translateX(0); }
+
+  .portal-main { margin-left: 0; }
+
+  .portal-topbar { display: flex; }
+
+  .portal-content { padding: 20px; }
+
+  .portal-sidebar__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 16, 47, 0.45);
+    z-index: 999;
+  }
+
+  .portal-sidebar__overlay.is-visible { display: block; }
+}

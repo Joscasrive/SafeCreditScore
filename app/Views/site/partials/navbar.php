@@ -12,6 +12,11 @@ $t_nav_contact     ??= '';
 $t_nav_signup      ??= '';
 $t_nav_signup_url  ??= '#';
 $t_nav_login       ??= '';
+
+$es_nav        = ($idioma ?? '') === 'es';
+$isLoggedIn    = (bool) session('user_id');
+$portalUrl     = $MY_CURRENT_PATH . ($es_nav ? 'es/portal' : 'portal');
+$logoutUrl     = $MY_CURRENT_PATH . ($es_nav ? 'es/logout' : 'logout');
 ?>
 <body>
   <div class="preloader-wrapper">
@@ -67,12 +72,21 @@ $t_nav_login       ??= '';
             <span></span>
           </div>
           <div class="header-cta-btn-wrapper">
-            <a href="<?php echo $t_nav_signup_url; ?>" class="btn-masco btn-masco--header btn-masco--header-secondary">
-              <span><?= $t_nav_signup ?></span>
-            </a>
-            <a href="#" class="btn-masco btn--header btn-primary-l03 btn-shadow rounded-pill">
-              <span><?= $t_nav_login ?></span>
-            </a>
+            <?php if ($isLoggedIn): ?>
+              <a href="<?php echo $logoutUrl; ?>" class="btn-masco btn-masco--header btn-masco--header-secondary">
+                <span><?= $es_nav ? 'Cerrar sesion' : 'Log out' ?></span>
+              </a>
+              <a href="<?php echo $portalUrl; ?>" class="btn-masco btn--header btn-primary-l03 btn-shadow rounded-pill">
+                <span><?= $es_nav ? 'Mi portal' : 'My portal' ?></span>
+              </a>
+            <?php else: ?>
+              <a href="<?php echo $t_nav_signup_url; ?>" class="btn-masco btn-masco--header btn-masco--header-secondary">
+                <span><?= $t_nav_signup ?></span>
+              </a>
+              <a href="<?php echo $t_nav_login_url; ?>" class="btn-masco btn--header btn-primary-l03 btn-shadow rounded-pill">
+                <span><?= $t_nav_login ?></span>
+              </a>
+            <?php endif; ?>
           </div>
         </nav>
       </div>
